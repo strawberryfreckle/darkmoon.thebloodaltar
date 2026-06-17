@@ -1,87 +1,79 @@
-const canvas = document.querySelector("#hero-canvas");
-const ctx = canvas.getContext("2d");
-const nav = document.querySelector(".site-nav");
-const menuToggle = document.querySelector(".menu-toggle");
+// 1. 흩날리는 핏빛 재(Ash) 캔버스 이펙트
+const canvas = document.getElementById('ash-canvas');
+const ctx = canvas.getContext('2d');
 
-let width = 0;
-let height = 0;
-let pointerX = 0.5;
+let width, height;
 let particles = [];
 
-function resizeCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  width = window.innerWidth;
-  height = window.innerHeight;
-  canvas.width = Math.floor(width * ratio);
-  canvas.height = Math.floor(height * ratio);
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+// 캔버스 크기 맞춤 및 파티클 생성
+function initCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
-  // 불꽃 스파크 입자 생성 (속도와 크기를 불티처럼 조정)
-  particles = Array.from({ length: 150 }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    size: Math.random() * 2 + 0.5,
-    speed: Math.random() * 3 + 1, // 위로 빠르게 솟구침
-    alpha: Math.random() * 0.8 + 0.2
-  }));
-}
-
-function animate() {
-  // 1. 붉고 검은 배경 그라데이션 렌더링
-  const bgGradient = ctx.createLinearGradient(0, 0, 0, height);
-  bgGradient.addColorStop(0, "#080001"); // 상단: 짙은 어둠
-  bgGradient.addColorStop(0.5, "#2a0006"); // 중간: 피어오르는 붉은 기운
-  bgGradient.addColorStop(1, "#0a0102"); // 하단: 어둠
-  ctx.fillStyle = bgGradient;
-  ctx.fillRect(0, 0, width, height);
-
-  // 2. 스파크 파티클 렌더링
-  particles.forEach(p => {
-    // 불꽃 색상 설정 (오렌지~붉은빛)
-    ctx.fillStyle = `rgba(255, 80, 20, ${p.alpha})`;
-    
-    // 불꽃이 빛나는 효과 (Glow)
-    ctx.shadowColor = "rgba(255, 50, 0, 0.9)";
-    ctx.shadowBlur = 12;
-    
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0; // 다른 곳에 영향 안 가게 리셋
-    
-    // 입자 이동 로직 (위로 상승하며 좌우로 흔들림)
-    p.y -= p.speed;
-    p.x += Math.sin(p.y * 0.02) * 0.8; 
-    
-    // 화면 위로 벗어나면 아래에서 다시 생성
-    if (p.y < -10) {
-      p.y = height + 10;
-      p.x = Math.random() * width;
+    particles = [];
+    // 불티 100개 생성
+    for (let i = 0; i < 100; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 2 + 0.5,
+            speedY: Math.random() * 1.5 + 0.5, // 위로 올라가는 속도
+            speedX: (Math.random() - 0.5) * 1, // 좌우 흔들림
+            opacity: Math.random() * 0.6 + 0.2
+        });
     }
-  });
-
-  requestAnimationFrame(animate);
 }
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
+// 파티클 애니메이션 루프
+function animateAsh() {
+    ctx.clearRect(0, 0, width, height); // 이전 화면 지우기
+    
+    particles.forEach(p => {
+        ctx.fillStyle = `rgba(255, 60, 20, ${p.opacity})`;
+        ctx.shadowColor = "rgba(255, 25, 10, 0.8)";
+        ctx.shadowBlur = 8;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 이동 로직 (위로 상승)
+        p.y -= p.speedY;
+        p.x += Math.sin(p.y * 0.02) * p.speedX; // 살짝 곡선으로 흔들리며 올라감
+        
+        // 화면 밖(위)으로 나가면 아래에서 다시 생성
+        if (p.y < 0) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+        }
+    });
+    
+    requestAnimationFrame(animateAsh);
+}
+
+// 2. 붉은 달 스크롤 패럴랙스 (입체감 효과)
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const moon = document.querySelector('.moon-wrapper');
+    const heroContent = document.querySelector('.hero-content');
+    
+    if (moon) {
+        // 스크롤 내릴 때 달이 조금 더 천천히 아래로 내려가게 하여 깊이감 부여
+        moon.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.3}px))`;
+    }
+    
+    if (heroContent) {
+        // 글자들은 살짝 위로 올라가면서 서서히 흐려짐
+        heroContent.style.transform = `translateY(${scrollY * 0.1}px)`;
+        heroContent.style.opacity = 1 - (scrollY * 0.002);
+    }
 });
 
-nav.addEventListener("click", (event) => {
-  if (event.target.matches("a")) {
-    nav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-  }
-});
+// 화면 크기가 바뀔 때 캔버스 재조정
+window.addEventListener('resize', initCanvas);
 
-window.addEventListener("pointermove", (event) => {
-  pointerX = event.clientX / window.innerWidth;
-});
-
-window.addEventListener("resize", resizeCanvas);
-
-resizeCanvas();
-animate();
+// 실행
+initCanvas();
+animateAsh();

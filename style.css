@@ -1,433 +1,253 @@
+/* 기본 리셋 및 폰트 설정 */
 :root {
-  --bg: #030101; 
-  --panel: rgba(15, 3, 5, 0.85); 
-  --text: #f0e6e8;
-  --muted: #a38a8e;
-  --line: rgba(255, 40, 60, 0.2); 
-  --blood: #e6192b; 
-  --blood-glow: rgba(230, 25, 43, 0.7);
-  --neon-blue: #2a52be; 
-  --twilight: #8b008b; 
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.9);
+  --blood-red: #e6192b;
+  --bg-dark: #050102;
+  --text-light: #f0e6e8;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-dark); color: var(--text-light); }
+body { font-family: 'Noto Serif KR', serif; overflow-x: hidden; }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
-  overflow-x: hidden;
-}
+h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
 
-body::before {
-  position: fixed; inset: 0; z-index: -2; pointer-events: none; content: "";
-  background-image: url('image/bg_1.jpg'); /* 이미지 경로 입력 */
-  background-size: cover;        /* 화면에 꽉 차게 */
-  background-position: center;   /* 이미지 중앙 정렬 */
-  background-repeat: no-repeat;  /* 반복 방지 */
-}
-
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-
-#hero-canvas { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; }
-
+/* 헤더 스타일 */
 .site-header {
-  position: fixed; top: 0; left: 0; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 18px clamp(18px, 4vw, 56px);
-  background: rgba(3, 1, 1, 0.8); backdrop-filter: blur(20px);
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 50px; background: rgba(5, 1, 2, 0.7); backdrop-filter: blur(10px);
+}
+.brand { font-size: 1.2rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 12px; height: 12px; background: var(--blood-red); border-radius: 50%; box-shadow: 0 0 10px var(--blood-red); }
+.site-nav a { color: #aaa; text-decoration: none; margin-left: 30px; font-weight: 600; font-family: 'Cinzel', serif; letter-spacing: 2px; transition: color 0.3s; }
+.site-nav a:hover { color: #fff; }
+
+/* === 1. 히어로 섹션 === */
+.hero-section {
+  position: relative; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+  overflow: hidden;
 }
 
-.brand {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.05em;
+/* 붉은 달과 심장박동 & 스크린 블렌드 모드 마법 */
+.moon-wrapper {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+  width: 800px; /* 달 크기 (조절 가능) */
+  z-index: 1;
+}
+.blood-moon {
+  width: 100%; height: auto;
+  mix-blend-mode: screen; /* 까만 배경을 투명하게 날려버리는 마법의 코드 */
+  animation: pulseMoon 4s infinite alternate ease-in-out;
+}
+@keyframes pulseMoon {
+  0% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(230, 25, 43, 0.3)); opacity: 0.8; }
+  100% { transform: scale(1.05); filter: drop-shadow(0 0 60px rgba(230, 25, 43, 0.8)); opacity: 1; }
 }
 
-.brand-mark {
-  width: 18px; height: 18px; background: var(--blood);
-  border-radius: 50%; box-shadow: 0 0 15px var(--blood), 0 0 30px var(--blood);
+/* 안개 효과 (CSS 그라데이션 활용) */
+.fog-overlay {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+  background: linear-gradient(to top, #050102 10%, rgba(230,25,43,0.1) 50%, transparent 100%);
+  z-index: 2;
 }
 
-.site-nav {
-  display: flex; gap: clamp(16px, 3vw, 34px);
-  color: var(--muted); font-size: 0.85rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.1em;
-}
+#ash-canvas { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 
-.site-nav a:hover { color: var(--text); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-
-.section-panel { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
-
-.hero { position: relative; display: grid; min-height: 100vh; padding: 150px 0 72px; align-items: center; }
-.hero-content { max-width: 820px; }
-
-.eyebrow {
-  margin: 0 0 14px; color: var(--blood);
-  font-size: 0.85rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
-}
-.eyebrow_top{
-  color: #B0B8C1;
-  letter-spacing: 0.2em;
- font-weight: 800;
- font-size: 18px;
-  font-family: 'Cinzel', serif;
-}
-
-h1, h2, h3, p { margin-top: 0; }
-
-h1 {
-  margin-bottom: 22px; font-family: 'Cinzel', serif; font-size: clamp(4rem, 10vw, 8.5rem);
-  line-height: 0.9; text-transform: uppercase; color: #fff;
-  text-shadow: 0 0 40px rgba(230, 25, 43, 0.8), 3px 3px 0px #000;
-}
-
-h2 { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1.1; margin-bottom: 10px; color: #fff;
-    text-shadow: 0 0 40px rgba(230, 25, 43, 0.8), 3px 3px 0px #000;
-   
-}
-
-.hero-copy {
-  max-width: 600px; color: #d0c2c4; font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.8;
-  font-family: 'Noto Serif KR', serif; text-shadow: 2px 2px 4px #000;
-}
+/* 타이틀 텍스트 (달 위에 얹어짐) */
+.hero-content { position: relative; z-index: 10; margin-top: 15vh; }
+.eyebrow { color: #aaa; letter-spacing: 5px; margin-bottom: 15px; font-weight: 800; }
+.hero-title { font-size: 5rem; color: #fff; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 0 30px rgba(230,25,43,0.8), 2px 2px 0 #000; }
+.hero-copy { font-size: 1.2rem; color: #ccc; line-height: 1.8; margin-bottom: 40px; text-shadow: 1px 1px 5px #000; }
 
 .button {
-  display: inline-flex; min-height: 52px; align-items: center; justify-content: center;
-  padding: 0 40px; border: 1px solid var(--blood);
-  font-family: 'Cinzel', serif; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
-  background: rgba(230, 25, 43, 0.15); color: #fff;
-  box-shadow: inset 0 0 20px rgba(230, 25, 43, 0.3); transition: all 0.3s ease;
-  margin-top: 20px;
+  display: inline-block; padding: 15px 40px; border: 1px solid var(--blood-red);
+  color: #fff; text-decoration: none; font-family: 'Cinzel', serif; font-weight: 800; letter-spacing: 3px;
+  background: rgba(230, 25, 43, 0.2); transition: 0.3s;
 }
-.button:hover {
-  background: var(--blood); box-shadow: 0 0 40px var(--blood-glow); transform: scale(1.05);
-}
+.button:hover { background: var(--blood-red); box-shadow: 0 0 30px rgba(230, 25, 43, 0.6); }
 
-/* --- Your Fate Section --- */
-.fate { padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.03); }
-.fate-container {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-  background: var(--panel); border: 1px solid var(--line);
-  border-radius: 4px; padding: 60px; box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
+/* === 2. 게임 특징 (Features) 섹션 === */
+.features-section {
+  position: relative; padding: 120px 20px; background: #050102; z-index: 10;
 }
+.section-container { max-width: 1200px; margin: 0 auto; }
+.feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
 
-.fate-visual {
-  position: relative; display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(circle at center, rgba(230, 25, 43, 0.2) 0%, transparent 70%);
-  border-right: 1px solid rgba(255,255,255,0.05);
-}
-.fate-visual::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("images/princess.jpg");
+/* === 2. 게임 특징 (Features) 섹션 카드 수정 === */
+.feature-card {
+  position: relative;
+  overflow: hidden; /* 카드를 벗어나는 배경이나 효과를 잘라냄 */
+  padding: 50px 40px;
+  border: 1px solid rgba(230, 25, 43, 0.2);
+  text-align: left;
+  border-radius: 4px;
+  background-color: #050102; /* 기본 까만 배경 */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.45;
-  filter: brightness(0.55) contrast(1.15);
-  z-index: 0;
-}
-
-.princess-silhouette {
-  position: relative;
-  z-index: 1;
-  width: 100%; height: 300px;
-  /* CSS 그라데이션을 이용해 제단에 누운 사람의 추상적인 실루엣 표현 */
-  /* background: 
-    radial-gradient(ellipse at 50% 80%, #000 30%, transparent 70%),
-    linear-gradient(to top, rgba(230, 25, 43, 0.5), transparent);
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  filter: drop-shadow(0 0 20px var(--blood));
-  opacity: 0.8;
-  animation: breathe 4s infinite ease-in-out; */
-}
-
-@keyframes breathe {
-  0%, 100% { opacity: 0.6; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1.02); filter: drop-shadow(0 0 40px var(--blood)); }
-}
-
-.fate-content h2 { margin-bottom: 5px; color: var(--blood); text-shadow: 0 0 20px var(--blood); }
-.fate-content .eyebrow { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; color: #fff; margin-bottom: 40px; letter-spacing: 0.1em; }
-
-.fate-description p {
-  font-family: 'Noto Serif KR', serif; font-size: 1.05rem; line-height: 1.9;
-  color: #ccc; margin-bottom: 24px;
-}
-
-/* --- Characters Section --- */
-.characters { padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.03); }
-.character-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.character-grid article {
-  border: 1px solid var(--line); background: var(--panel);
-  padding: 20px; text-align: center; transition: transform 0.4s ease;
-}
-.character-grid article:hover { transform: translateY(-10px); border-color: var(--blood); box-shadow: 0 10px 30px rgba(230, 25, 43, 0.3); }
-
-.portrait {
-  min-height: 350px; margin-bottom: 20px;
-  background: linear-gradient(180deg, transparent 60%, #000 100%), #140507;
-  border: 1px solid rgba(255,255,255,0.05); position: relative;
-}
-.portrait::before {
-  content: ''; position: absolute; inset: 0;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4" fill="rgba(0,0,0,0.5)"/></svg>');
-  opacity: 0.5;
-}
-.portrait.blood { box-shadow: inset 0 0 100px rgba(230, 25, 43, 0.15); }
-.portrait.twilight { box-shadow: inset 0 0 100px rgba(139, 0, 139, 0.15); }
-.portrait.abyss { box-shadow: inset 0 0 100px rgba(42, 82, 190, 0.15); }
-
-.character-grid p { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #fff; margin: 0; letter-spacing: 0.15em; font-weight: 800;}
-
-/* --- World Map Section --- */
-.world { padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.03); }
-.map-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
-
-.map-visual {
-  position: relative; 
-  min-height: 510px; 
-  overflow: hidden;
-  border: 1px solid var(--blood); 
-  box-shadow: inset 0 0 50px rgba(230, 25, 43, 0.2);
-  margin-bottom: 300px;
-
-  /* ★ 여기에 준비하신 지도 이미지 경로를 넣으세요 ★ */
-  background-image: url(./images/map.png); 
-  background-size: cover;        /* 박스 크기에 맞게 이미지를 꽉 채움 */
-  background-position: center;   /* 이미지 중심을 가운데로 정렬 */
-  background-repeat: no-repeat;  /* 이미지 반복 방지 */
-}
-/* 가상의 지도 텍스쳐 */
-.map-visual::after {
-  content: ''; position: absolute; inset: 0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(230, 25, 43, 0.1) 0%, transparent 50%),
-    linear-gradient(rgba(230, 25, 43, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(230, 25, 43, 0.1) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
-}
-
-/* 레이더 스캔 효과 */
-.radar-scan {
-  position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
-  background: conic-gradient(from 0deg, transparent 70%, rgba(230, 25, 43, 0.4) 100%);
-  transform-origin: 0 0;
-  animation: radar 4s linear infinite;
-  z-index: 1;
-}
-@keyframes radar { 100% { transform: rotate(360deg); } }
-
-.map-node {
-  position: absolute; z-index: 2; padding: 8px 12px;
-  border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.8);
-  color: #fff; font-size: 0.75rem; font-family: 'Cinzel', serif; letter-spacing: 0.1em;
-}
-.map-node::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px;
-  border-radius: 50%; background: var(--blood); box-shadow: 0 0 10px var(--blood);
-}
-.city { top: 67%; left: 25%; }
-.alley { top: 43%; left: 40%; }
-.hideout { right: 25%; bottom: 30%; }
-.dardan { right: 15%; top: 15%; border-color: var(--blood); }
-
-.location-list article {
-  border: 1px solid var(--line); background: var(--panel); padding: 25px; margin-bottom: 15px;
-}
-.location-list h3 { font-family: 'Cinzel', serif; color: var(--blood); font-size: 1.2rem;}
-.location-list p { font-family: 'Noto Serif KR', serif; color: #bbb; font-size: 0.95rem; line-height: 1.6;}
-
-/* --- Game Info & Platforms --- */
-.game-info {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.info-text h2 { margin: 0; font-size: 2.5rem; }
-.info-text p { color: var(--muted); font-family: 'Cinzel', serif; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; }
-
-.platform-icons {
-  display: flex; gap: 30px; align-items: center; color: rgba(255,255,255,0.5);
-}
-.platform-icons svg, .platform-icons span {
-  transition: color 0.3s ease, transform 0.3s ease; cursor: pointer;
-}
-.platform-icons svg:hover, .platform-icons span:hover { color: #fff; transform: translateY(-5px); }
-.platform-icons span { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 800; letter-spacing: 0.1em; }
-
-.site-footer {
-  display: flex; justify-content: space-between; padding: 50px clamp(18px, 4vw, 56px);
-  color: var(--muted); font-size: 0.85rem; background: #000;
-}
-.site-footer p { font-family: 'Cinzel', serif; color: var(--blood); letter-spacing: 0.1em; }
-
-@media (max-width: 900px) {
-  .fate-container, .map-layout, .game-info { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
-  .fate-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
-  .character-grid { grid-template-columns: repeat(2, 1fr); }
-  .platform-icons { margin-top: 30px; justify-content: center; flex-wrap: wrap; }
-}
-@media (max-width: 600px) {
-  .character-grid { grid-template-columns: 1fr; }
-}
-
-/* =========================================
-   1. 상단 (처음 화면) 전체화면 배경 이미지 설정
-========================================= */
-section.hero.section-panel {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  /* 콘텐츠 중앙 정렬을 위한 여백 계산 */
-  padding-left: max(18px, calc((100vw - 1160px) / 2));
-  padding-right: max(18px, calc((100vw - 1160px) / 2));
-  
-  /* ★ 여기에 상단 배경화면 이미지 이름을 적어주세요 ★ */
-  /* background-image: url('image/moon.jpg');  */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  z-index: 2; /* 캔버스(스파크)를 덮어 가리기 위해 높게 설정 */
-}
-
-/* 상단 배경 이미지가 너무 밝을 경우 글씨가 잘 보이도록 검은색 오버레이 추가 */
-section.hero.section-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* 0.5 숫자를 올리면 더 어두워집니다 */
-  z-index: -1;
-}
-
-/* =========================================
-   1. 상단 (처음 화면) 배경 이미지 설정
-========================================= */
-.hero {
-  position: relative;
-  /* ★ 상단 이미지 경로 (이미지가 안 뜨면 경로를 꼭 확인하세요!) ★ */
-  background-image: url('images/moon.jpg'); 
-  background-size: cover;
-  background-position: center;
-}
-
-/* 배경을 어둡게 눌러주는 오버레이 */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6); 
-  z-index: 0;
-}
-
-/* 텍스트와 카드가 배경보다 무조건 위에 오도록 고정 */
-.hero-content, .signal-card {
-  position: relative;
-  z-index: 1; 
-}
-
-/* =========================================
-   2. 중간 영역 투명화 & 캔버스 Z-index (스파크)
-========================================= */
-body { background: #000; position: relative; }
-body::before { display: none; }
-
-/* 스파크 애니메이션이 비치도록 중간 섹션 투명화 */
-.fate, .characters, .world {
-  background: transparent !important; 
-}
-
-/* 스파크 캔버스를 글씨 뒤로 배치 */
-#hero-canvas {
-  z-index: -2 !important; 
-}
-
-/* =========================================
-   3. 하단 포스터 배경 (월드맵 중간부터 나타나기)
-========================================= */
-body::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 130vh; /* 높이를 조절하여 월드맵 부근에 오도록 맞춤 */
-  
-  /* ★ 첨부하신 하단 사진 ★ */
-  background-image: url('images/footer.jpg'); 
-  background-size: cover; 
-  background-position: center 80%; /* 인물이 안 잘리게 바닥에 고정 */
-  background-repeat: no-repeat;
-  
-  z-index: -1;
-  pointer-events: none;
-  
-  /* transparent 구간을 40%까지 늘려 월드맵 위쪽에서는 완전히 안 보이다가 중간부터 서서히 나타남 */
-  mask-image: linear-gradient(to bottom, transparent 0%, transparent 20%, black 40%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 40%);
-}
-
-/* 하단 섹션들의 자체 배경을 투명하게 날림 */
-.game-info, .site-footer {
-  background: transparent !important;
-  border-top: none !important;
-}
-
-/* 정보 박스가 사진을 완전히 가리지 않도록 반투명 블러 처리 */
-.game-info dl, .location-list article {
-  background: rgba(10, 2, 3, 0.5);
-  backdrop-filter: blur(8px);
-  border-color: rgba(255, 40, 60, 0.2);
-}
-.info-text,
-.platform-icons {
-  transform: translateY(40px);
-}
-.platform-icons img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  opacity: 0.6;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: border-color 0.4s ease, transform 0.4s ease;
   cursor: pointer;
 }
 
+/* 카드 위에 깔리는 까만 장막 (마우스를 올리면 투명해짐) */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 1, 2, 0.95); /* 평소엔 사진이 거의 안 보일 정도로 까맣게 */
+  transition: background 0.5s ease;
+  z-index: 1;
+}
+
+/* 카드에 마우스를 올렸을 때 */
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--blood-red);
+  box-shadow: 0 10px 30px rgba(230, 25, 43, 0.15);
+}
+
+/* 마우스를 올리면 까만 장막이 옅어지며 붉은 핏빛 톤이 살짝 돕니다 */
+.feature-card:hover::before {
+  background: rgba(20, 5, 8, 0.4); 
+}
+
+/* 글자는 장막보다 위에 있어야 하므로 z-index 설정 */
+.feature-card h3, .feature-card p {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s ease, text-shadow 0.4s ease;
+}
+
+.feature-card h3 {
+  color: var(--blood-red);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.feature-card p {
+  color: #bbb;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+/* 호버 시 글자 효과: 살짝 떠오르며 붉은빛 그림자 발생 */
+.feature-card:hover h3 {
+  transform: translateY(-5px);
+  text-shadow: 0 0 15px rgba(230, 25, 43, 0.8);
+}
+.feature-card:hover p {
+  transform: translateY(-5px);
+  color: #fff;
+}
+/* === 3. 플랫폼 소개 (Game Info) 섹션 === */
+.game-info-section {
+  position: relative;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom, #050102, #000000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.info-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(20, 5, 8, 0.3);
+  border: 1px solid rgba(230, 25, 43, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 50px 60px;
+  border-radius: 4px;
+}
+
+.info-text {text-align: left;}
+.info-text h2 {
+  font-size: 2.2rem;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 20px rgba(230, 25, 43, 0.4);
+}
+.info-text p {
+  font-family: 'Cinzel', serif;
+  color: var(--blood-red);
+  font-size: 0.95rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* 플랫폼 아이콘 레이아웃 및 호버 효과 */
+.platform-icons {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.platform-icons img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.4;
+  filter: grayscale(100%) brightness(1.5);
+  transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+}
+/* 마우스를 올리면 본래 색상과 밝기가 복구되며 위로 살짝 들림 */
 .platform-icons img:hover {
   opacity: 1;
-  transform: translateY(-5px);
-}
-.portrait {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  filter: grayscale(0%) brightness(1);
+  transform: translateY(-6px);
 }
 
-.portrait.jay {
-  background-image: url('images/jay.jpeg');
+/* === 4. 사이트 푸터 (Footer) === */
+.site-footer {
+  background: #000000;
+  padding: 40px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 10;
+}
+.site-footer p {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+.footer-copy {
+  color: #555;
+}
+.footer-notice {
+  font-family: 'Cinzel', serif;
+  color: var(--blood-red);
+  font-weight: 600;
+  letter-spacing: 2px;
 }
 
-.portrait.sunghoon {
-  background-image: url('images/sunghoon.jpeg');
-}
-
-.portrait.jake {
-  background-image: url('images/jake.jpeg');
-}
-
-.portrait.sunoo {
-  background-image: url('images/sunoo.jpeg');
-}
-
-.portrait.jungwon {
-  background-image: url('images/jungwon.jpeg');
-}
-
-.portrait.niki {
-  background-image: url('images/niki.jpeg');
+/* 📱 반응형 웹 디자인 (화면이 작아질 때 세로 배치) */
+@media (max-width: 900px) {
+  .info-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+    padding: 40px 30px;
+  }
+  .info-text {
+    text-align: center;
+  }
+  .info-text h2 {
+    font-size: 1.8rem;
+  }
+  .platform-icons {
+    gap: 30px;
+  }
+  .site-footer {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
 }

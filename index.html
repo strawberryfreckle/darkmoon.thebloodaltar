@@ -4,152 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DARK MOON | Official Game Site</title>
-  <meta name="description" content="다크문 사건 이후 오랜 시간이 흘렀다. 환생한 소년들의 기억이 깨어나는 싱글 플레이 스토리 액션 RPG.">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;600;800&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- <canvas id="hero-canvas" aria-hidden="true"></canvas> -->
 
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Dark Moon home">
+    <a class="brand" href="#hero">
       <span class="brand-mark"></span>
       DARK MOON
     </a>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a href="#fate">Your Fate</a>
+    <nav class="site-nav">
+      <a href="#story">Story</a>
+      <a href="#features">Features</a>
       <a href="#characters">Knights</a>
-      <a href="#world">World Map</a>
+      <a href="#world">World</a>
     </nav>
   </header>
 
-  <main id="top">
-    <section class="hero section-panel" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <p class="eyebrow_top">다크문 : 달의 제단</p>
-        <h2 id="hero-title">DARK MOON<br>THE BLOOD ALTAR</h2>
-        <p class="hero-copy">
-          환생한 공주와 다시 만난 기사들
-          <br>그러나 다르단은 그들에게 또다시 손을 뻗는다
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#fate">Awaken Now</a>
-        </div>
-      </div>
-    </section>
+  <section id="hero" class="hero-section">
+    <div class="moon-wrapper">
+      <img src="moon.jpg" alt="Blood Moon" class="blood-moon">
+    </div>
+    
+    <canvas id="ash-canvas"></canvas>
+    
+    <div class="fog-overlay"></div>
 
-    <!-- 수정된 Your Fate 섹션 -->
-    <section class="fate section-panel" id="fate" aria-labelledby="fate-title">
-      <div class="fate-container">
-        <div class="fate-visual">
-          <!-- 공주 실루엣 효과를 위한 요소 -->
-          <div class="princess-silhouette"></div>
-        </div>
-        <div class="fate-content">
-          <h2 id="fate-title">Your Fate</h2>
-         <p class="eyebrow">그대의 뱀파이어 기사단을 구원하라</p>
-          <div class="fate-description">
-            <p>당신은 오래 전 밤을 다스리던 뱀파이어 공주였다.<br>
-            그러나 지금,<br>
-            그대의 육신은 제단 위에 잠들어 있다.</p>
-            <p>당신의 몸은 침묵하고 있으나<br>
-            의식은 어둠 속에서도 깨어 있다.<br>
-            멀리서 들려오는 익숙한 목소리.<br>
-            마지막까지 충성하는 뱀파이어 기사단이다.</p>
-            <p>다르단에게 힘을 빼앗긴 채<br>
-            기사들은 무자비한 사냥을 당하고 있다.<br>
-            하지만 그들은 꺾이지 않고 싸운다.<br>
-            오로지 공주만을 위해.</p>
-            <p>이제 기사단에게 힘을 전해야만 한다.<br>
-            이 밤의 끝에서, 그들을 살아남게 해야만 한다.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="hero-content">
+      <p class="eyebrow">다크문 : 달의 제단</p>
+      <h1 class="hero-title">DARK MOON<br>THE BLOOD ALTAR</h1>
+      <p class="hero-copy">
+        환생한 공주와 다시 만난 기사들<br>
+        그러나 다르단은 그들에게 또다시 손을 뻗는다
+      </p>
+      <a class="button primary" href="#features">AWAKEN NOW</a>
+    </div>
+  </section>
 
-    <section class="characters section-panel" id="characters" aria-labelledby="characters-title">
-      <div class="section-heading">
-        <p class="eyebrow">Knights</p>
-        <h2 id="characters-title">당신을 위해 싸우는 여섯 명의 기사</h2>
-      </div>
-      <div class="character-grid">
-        <article>
-  <div class="portrait jay"></div>
-  <p>JAY</p>
-</article>
-<article>
-  <div class="portrait sunghoon"></div>
-  <p>SUNGHOON</p>
-</article>
-<article>
-  <div class="portrait jake"></div>
-  <p>JAKE</p>
-</article>
-<article>
-  <div class="portrait sunoo"></div>
-  <p>SUNOO</p>
-</article>
-<article>
-  <div class="portrait jungwon"></div>
-  <p>JUNGWON</p>
-</article>
-<article>
-  <div class="portrait niki"></div>
-  <p>NIKI</p>
-</article>
-      </div>
-    </section>
+  <section id="features" class="features-section">
+    <div class="section-container">
+      <div class="feature-grid">
+        
+        <article class="feature-card">
+          <h3>Story-Driven Action RPG</h3>
+          <p>다르단의 음모를 추적하라.<br>치밀하게 구성된 메인 퀘스트와 전투가 기다린다.</p>
+        </article>
 
-    <section class="world section-panel" id="world" aria-labelledby="world-title">
-      <div class="section-heading">
-        <p class="eyebrow">World Map</p>
-        <h2 id="world-title">기사들이 사냥당하는 암흑의 도시</h2>
-      </div>
-      <div class="map-layout">
-        <!-- 가상의 지도 이미지를 CSS 배경으로 구현 -->
-        <div class="map-visual" aria-label="City map terminal">
-          <div class="radar-scan"></div>
-          <span class="map-node city">Neo City Center</span>
-          <span class="map-node alley">Sector 7 Alley</span>
-          <span class="map-node hideout">Safe house</span>
-          <span class="map-node dardan">Dardan Base</span>
-        </div>
-        <div class="location-list">
-          <article>
-            <h3>Neo City & Back Alley</h3>
-            <p>기사들이 몸을 숨기고 있는 도시의 뒷골목. 
-              <br>네온사인의 화려함 이면에 적들의 감시가 도사리고 있다.</p>
-          </article>
-          <article>
-            <h3>Safe house</h3>
-            <p>기사들의 거점이 되는 안전 가옥. 
-              <br>당신의 의식을 통해 이들에게 능력을 부여할 수 있다.</p>
-          </article>
-          <article>
-            <h3>Dardan Base</h3>
-            <p>다르단 세력의 본거지. 당신의 빼앗긴 힘이 봉인된 곳이자, 최종적으로 파괴해야 할 곳이다.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+        <article class="feature-card">
+          <h3>Explore Hidden Secrets</h3>
+          <p>도시 곳곳에 숨겨진 서브 퀘스트를 해결하라.<br>흩어진 기억의 조각이 새로운 진실로 이어진다.</p>
+        </article>
 
-    <section class="game-info section-panel" id="game-info">
+        <article class="feature-card">
+          <h3>Strategic Combat</h3>
+          <p>상황에 맞는 선택으로 전투를 이끌어라.<br>단순한 공격이 아닌 전략적 액션을 경험하라.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>6 Playable Knights</h3>
+          <p>각기 다른 시점과 운명을 가진 기사들.<br>여섯 명의 이야기가 하나의 진실로 연결된다.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="game-info" class="game-info-section">
+    <div class="info-container">
       <div class="info-text">
-        <h2 id="game-info-title">Awaken Your Power.</h2>
+        <h2>AWAKEN YOUR POWER.</h2>
         <p>Available Soon on PC and Consoles</p>
       </div>
       <div class="platform-icons">
-  <img src="images/steam.png" alt="Steam">
-  <img src="images/xbox.png" alt="Xbox">
-  <img src="images/playstation.webp" alt="PlayStation">
-</div>
-    </section>
-  </main>
+        <img src="images/steam.png" alt="Steam">
+        <img src="images/xbox.png" alt="Xbox">
+        <img src="images/playstation.webp" alt="PlayStation">
+      </div>
+    </div>
+  </section>
 
   <footer class="site-footer">
-    <p>Fan-made Portfolio Project</p>
+    <p class="footer-copy">© 2026 DARK MOON Project. All Rights Reserved.</p>
+    <p class="footer-notice">Fan-made Portfolio Project</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js"></script> 
 </body>
 </html>
