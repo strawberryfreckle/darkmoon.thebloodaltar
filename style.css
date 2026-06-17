@@ -280,22 +280,32 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
   z-index: 1;
 }
 
-/* 텍스트 박스 디자인 */
+
+/* 텍스트 박스 (배경과 테두리 제거) */
 .story-text {
   position: relative;
   z-index: 2;
   max-width: 600px;
-  background: rgba(10, 2, 3, 0.4);
-  backdrop-filter: blur(8px);
-  padding: 40px;
-  border-left: 2px solid var(--blood-red);
+  /* 기존에 있던 background, backdrop-filter, border, padding 등은 지우고 여백만 살짝 줍니다 */
+  padding: 0 20px;
 }
 
 .story-text h3 {
-  font-size: 1.8rem;
+  font-size: 2rem; /* 타이틀을 조금 더 키웠습니다 */
   color: var(--blood-red);
   margin-bottom: 20px;
   letter-spacing: 2px;
+  /* 글자 뒤에 진한 검은색 그림자를 두 겹으로 깔아서 형태를 뚜렷하게 잡음 */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 1), 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.story-text p {
+  font-size: 1rem;
+  color: #fff; /* 기존 #ddd보다 훨씬 밝은 완전한 흰색으로 변경 */
+  font-weight: 500; /* 폰트를 살짝 더 도톰하게 */
+  line-height: 1.9;
+  /* 본문에도 그림자를 넣어 밝은 배경 사진 위에서도 글자가 안 묻히게 처리 */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 1), 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
 /* 지그재그 배치 설정 */
@@ -303,7 +313,6 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
 .story-scene.right { justify-content: flex-end; }
 .story-scene.right .story-text { 
   border-left: none; 
-  border-right: 2px solid var(--blood-red); 
   text-align: right; 
 }
 .story-scene.center { justify-content: center; }
@@ -331,4 +340,28 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
   font-weight: 700;
   line-height: 1.6 !important;
   text-shadow: 0 0 30px rgba(230, 25, 43, 0.9), 2px 2px 4px #000;
+}
+/* 마지막 두 줄 강력한 강조 (붉은빛 복구!) */
+.story-text p.final-copy {
+  font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
+  color: #fff !important;
+  font-family: 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+  text-shadow: 0 0 30px rgba(230, 25, 43, 1), 3px 3px 5px #000 !important;
+}
+/* === 마지막 Scene 5 심연 그라데이션 효과 === */
+/* 마지막 씬 텍스트가 스르륵 떠오르는 애니메이션 */
+.story-scene.finale .mission-text {
+  animation: fadeUp 2s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(100px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.story-scene.finale::before {
+  /* 기존에 깔려있던 전체 까만 장막은 제거 (그라데이션 빛을 살리기 위함) */
+  display: none; 
 }
