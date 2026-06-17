@@ -389,6 +389,19 @@ body::after {
 .platform-icons {
   transform: translateY(40px);
 }
+.platform-icons img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.platform-icons img:hover {
+  opacity: 1;
+  transform: translateY(-5px);
+}
 .portrait {
   background-size: cover;
   background-position: center;
