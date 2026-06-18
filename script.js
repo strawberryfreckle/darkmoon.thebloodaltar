@@ -64,42 +64,42 @@ window.addEventListener('scroll', () => {
 const knightsData = {
   jay: {
     name: "JAY", type: "Guardian", title: "형제들을 위해 기꺼이 피를 뒤집어쓴 수호자",
-    image: "images/jay.jpeg",
+    image: "images/jay2.jpeg",
     story: "과거의 기억을 잃은 채 평범한 학생으로 살아가던 중, 가장 먼저 각성하여 방패를 들었다.<br>어떤 희생을 치르더라도 동료들을 지키겠다는 강한 집념을 가지고 있다.",
     stats: { def: 95, ins: 70, sur: 85 },
     skillName: "Blood Oath", skillDesc: "자신의 생명력을 불태워 아군 전체에게 절대 뚫리지 않는 피의 방벽을 부여합니다."
   },
   jake: {
     name: "JAKE", type: "Striker", title: "전장을 지배하는 피의 심판자",
-    image: "images/jake.jpeg",
+    image: "images/jake2.jpeg",
     story: "가장 강력한 전투력을 지닌 전위의 칼날.<br>다르단의 군대와 맞설 때 그의 움직임은 마치 춤을 추는 것과 같다.",
     stats: { def: 60, ins: 80, sur: 75 },
     skillName: "Crimson Slash", skillDesc: "눈에 보이지 않는 속도로 돌진하여 적의 급소를 베어냅니다."
   },
   sunghoon: {
     name: "SUNGHOON", type: "Assassin", title: "그림자 속에서 움직이는 은빛 송곳니",
-    image: "images/sunghoon.jpeg",
+    image: "images/sunghoon2.jpeg",
     story: "냉철한 판단력과 얼음처럼 차가운 이성을 지닌 암살자.<br>어둠 속에서 가장 빠르게 적의 숨통을 끊는다.",
     stats: { def: 55, ins: 90, sur: 70 },
     skillName: "Shadow Pierce", skillDesc: "그림자 속으로 동화되어 적의 배후를 치명적으로 타격합니다."
   },
   jungwon: {
     name: "JUNGWON", type: "Commander", title: "운명을 이끄는 고요한 밤의 눈",
-    image: "images/jungwon.jpeg",
+    image: "images/jungwon2.jpg",
     story: "기사단의 실질적인 리더이자 전술의 핵심.<br>전장 전체를 꿰뚫어보는 눈을 가졌으며, 흔들림 없는 결단력을 보여준다.",
     stats: { def: 75, ins: 95, sur: 80 },
     skillName: "Lunar Directive", skillDesc: "전장의 흐름을 읽고 모든 아군의 공격력과 회피율을 극대화시킵니다."
   },
   sunoo: {
     name: "SUNOO", type: "Sorcerer", title: "핏빛 장미를 피워내는 환영술사",
-    image: "images/sunoo.jpeg",
+    image: "images/sunoo2.jpg",
     story: "아름답고도 치명적인 마법을 다루는 기사.<br>그의 미소 뒤에는 적을 혼란에 빠뜨리는 잔혹한 환영이 숨어있다.",
     stats: { def: 50, ins: 85, sur: 90 },
     skillName: "Rose Illusion", skillDesc: "치명적인 가시 덩굴을 소환하여 적들을 속박하고 환상 속에 가둡니다."
   },
   "niki": {
     name: "NIKI", type: "Berserker", title: "통제 불능의 파괴 본능",
-    image: "images/niki.jpg",
+    image: "images/niki2.jpeg",
     story: "가장 어린 기사지만, 내재된 파괴력은 누구보다 강력하다.<br>전투가 길어질수록 억눌러왔던 뱀파이어의 본성이 폭발한다.",
     stats: { def: 70, ins: 60, sur: 95 },
     skillName: "Savage Awakening", skillDesc: "이성을 잃는 대신 압도적인 파괴력과 속도를 얻어 적진을 유린합니다."
