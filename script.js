@@ -69,8 +69,8 @@ const knightsData = {
     stats: { def: 95, ins: 70, sur: 85 },
     skillName: "Blood Oath", skillDesc: "자신의 생명력을 불태워 아군 전체에게 절대 뚫리지 않는 피의 방벽을 부여합니다."
   },
-  heeseung: {
-    name: "HEESEUNG", type: "Striker", title: "전장을 지배하는 피의 심판자",
+  jake: {
+    name: "JAKE", type: "Striker", title: "전장을 지배하는 피의 심판자",
     image: "images/jake.jpeg",
     story: "가장 강력한 전투력을 지닌 전위의 칼날.<br>다르단의 군대와 맞설 때 그의 움직임은 마치 춤을 추는 것과 같다.",
     stats: { def: 60, ins: 80, sur: 75 },
@@ -97,16 +97,16 @@ const knightsData = {
     stats: { def: 50, ins: 85, sur: 90 },
     skillName: "Rose Illusion", skillDesc: "치명적인 가시 덩굴을 소환하여 적들을 속박하고 환상 속에 가둡니다."
   },
-  "ni-ki": {
-    name: "NI-KI", type: "Berserker", title: "통제 불능의 파괴 본능",
-    image: "images/niki.jpeg",
+  "niki": {
+    name: "NIKI", type: "Berserker", title: "통제 불능의 파괴 본능",
+    image: "images/niki.jpg",
     story: "가장 어린 기사지만, 내재된 파괴력은 누구보다 강력하다.<br>전투가 길어질수록 억눌러왔던 뱀파이어의 본성이 폭발한다.",
     stats: { def: 70, ins: 60, sur: 95 },
     skillName: "Savage Awakening", skillDesc: "이성을 잃는 대신 압도적인 파괴력과 속도를 얻어 적진을 유린합니다."
   }
 };
 
-const knightOrder = ["jay", "heeseung", "sunghoon", "jungwon", "sunoo", "ni-ki"];
+const knightOrder = ["jay", "jake", "sunghoon", "sunoo", "jungwon", "niki"];
 let currentIndex = 0;
 
 document.addEventListener('DOMContentLoaded', () => {

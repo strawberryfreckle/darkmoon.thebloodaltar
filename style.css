@@ -528,6 +528,7 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
 .close-modal-btn:hover { color: var(--blood-red); }
 
 /* 모달 내부 컨텐츠 정렬 */
+/* 모달 내부 컨텐츠 정렬 */
 .modal-content {
   display: flex;
   width: 90%;
@@ -542,23 +543,27 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
   transform: scale(1) translateY(0);
 }
 
+/* === 사진 영역(왼쪽) 크기 강제 고정 === */
 .modal-left {
-  flex: 1;
+  flex: 0 0 40%; /* 전체 창 너비의 딱 40%만 차지하도록 강제 고정! (절대 안 늘어남) */
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: flex-end; /* 발끝을 무조건 바닥에 딱 붙임 */
   position: relative;
 }
 
 .modal-left img {
-  max-height: 100%;
-  width: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 800x1200 비율을 깨지 않고 공간 안에 맞춤 */
+  object-position: center bottom; /* 사진을 항상 '정중앙 바닥'에 고정 */
   filter: drop-shadow(0 0 20px rgba(230, 25, 43, 0.2));
 }
 
+/* === 텍스트 영역(오른쪽) 크기 강제 고정 === */
 .modal-right {
-  flex: 1;
+  flex: 1; /* 남은 공간(60%)을 텍스트가 모두 차지하며 절대 밀리지 않음 */
   display: flex;
   flex-direction: column;
   justify-content: center;
