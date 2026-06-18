@@ -377,3 +377,292 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
   z-index: 1;
   pointer-events: none;
 }
+/* === Knights Section === */
+.knights-page { background: var(--bg-dark); }
+
+.knights-section {
+  padding: 120px 5%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.knights-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.knights-header h2 {
+  font-size: 3rem;
+  color: var(--blood-red);
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(230, 25, 43, 0.5);
+  margin-bottom: 10px;
+}
+
+.knights-header p {
+  color: #aaa;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+}
+
+/* 6인 바둑판 그리드 (3x2) */
+/* === 세로형 책갈피 (아코디언) 레이아웃 === */
+.knights-accordion {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 65vh; /* 세로로 아주 길게 뻗은 느낌 */
+  min-height: 450px;
+  gap: 10px; /* 카드 사이의 틈 */
+  margin: 0 auto;
+}
+
+.knight-card {
+  position: relative;
+  flex: 1; /* 평소에는 좁은 면적만 차지 */
+  background-size: cover;
+  background-position: center 20%; /* 얼굴/눈 쪽이 잘 보이도록 초점 조절 (수치 조절 가능) */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  /* 부드럽게 넓어지는 애니메이션 */
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  filter: grayscale(70%) brightness(0.4); /* 어둠 속에 숨겨진 느낌 */
+}
+
+/* 마우스를 올렸을 때의 변화 */
+.knight-card:hover {
+  flex: 3; /* 너비가 3배로 스르륵 넓어짐! */
+  filter: grayscale(0%) brightness(1.1); /* 본래 색과 밝기 회복 */
+  border-color: var(--blood-red);
+  box-shadow: 0 0 30px rgba(230, 25, 43, 0.3);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 10px 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  text-align: center;
+  opacity: 0; /* 좁을 땐 이름 숨김 */
+  transition: opacity 0.5s ease;
+}
+
+.knight-card:hover .card-overlay {
+  opacity: 1; /* 넓어지면 이름 등장 */
+}
+
+.card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 5px #000;
+}
+
+/* 모바일 화면에서는 세로로 쌓이게 처리 */
+@media (max-width: 768px) {
+  .knights-accordion {
+    flex-direction: column;
+    height: 100vh;
+  }
+}
+/* === 블록형 스탯 칸 (네모네모) === */
+.stat-blocks {
+  display: flex;
+  gap: 4px; /* 네모 칸 사이의 간격 */
+}
+
+.stat-block {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(230, 25, 43, 0.3); /* 비어있는 칸의 희미한 붉은 테두리 */
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+/* 칸이 채워졌을 때의 모습 */
+.stat-block.filled {
+  background: var(--blood-red);
+  border-color: var(--blood-red);
+  box-shadow: 0 0 8px rgba(230, 25, 43, 0.8); /* 붉은 빛이 뿜어져 나옴 */
+}
+/* === 상세 팝업 (Modal) 전체 창 디자인 === */
+.knight-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 1, 2, 0.95);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  backdrop-filter: blur(10px);
+}
+
+.knight-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 201;
+}
+
+.close-modal-btn:hover { color: var(--blood-red); }
+
+/* 모달 내부 컨텐츠 정렬 */
+.modal-content {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  height: 80vh;
+  gap: 50px;
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.knight-modal.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.modal-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+.modal-left img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(230, 25, 43, 0.2));
+}
+
+.modal-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.modal-info-header { margin-bottom: 30px; }
+
+.modal-info-header h2 {
+  font-size: 3.5rem;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 10px rgba(230, 25, 43, 0.5);
+}
+
+.type-text {
+  font-size: 1.5rem;
+  color: var(--blood-red);
+  font-weight: 400;
+}
+
+.title-text {
+  font-size: 1.1rem;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+.modal-story {
+  margin-bottom: 40px;
+  border-left: 2px solid var(--blood-red);
+  padding-left: 20px;
+}
+
+.modal-story p {
+  color: #ddd;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.modal-stats { margin-bottom: 40px; }
+.stat-row { margin-bottom: 15px; }
+
+.stat-label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+/* 시그니처 스킬 박스 */
+.modal-skill {
+  background: rgba(230, 25, 43, 0.05);
+  border: 1px solid rgba(230, 25, 43, 0.2);
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.modal-skill h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--blood-red);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.modal-skill p {
+  color: #eee;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* === 모달 화살표 네비게이션 === */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 3.5rem;
+  cursor: pointer;
+  z-index: 202;
+  transition: all 0.3s ease;
+  padding: 20px;
+}
+
+.nav-arrow:hover {
+  color: var(--blood-red);
+  text-shadow: 0 0 20px rgba(230, 25, 43, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-arrow { left: 30px; }
+.next-arrow { right: 30px; }
+
+/* 모바일 반응형 */
+@media (max-width: 900px) {
+  .nav-arrow { font-size: 2.5rem; padding: 10px; }
+  .prev-arrow { left: 5px; }
+  .next-arrow { right: 5px; }
+  .modal-content { flex-direction: column; overflow-y: auto; height: 90vh; }
+  .modal-left { height: 40vh; }
+  .modal-info-header h2 { font-size: 2.5rem; }
+}

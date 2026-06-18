@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knights | DARK MOON</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="knights-page">
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"></span>
+      DARK MOON
+    </a>
+    <nav class="site-nav">
+      <a href="story.html">Story</a>
+      <a href="knights.html">Knights</a>
+      <a href="index.html#world">World</a>
+      <a href="event.html">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="knights-section">
+      <div class="knights-header">
+        <h2>THE SIX KNIGHTS</h2>
+        <p>Awakened guardians beneath the dark moon</p>
+      </div>
+
+      <div class="knights-accordion">
+        <article class="knight-card" data-id="jay" style="background-image: url('images/jay.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">JAY</h3>
+          </div>
+        </article>
+        <article class="knight-card" data-id="heeseung" style="background-image: url('images/jake.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">HEESEUNG</h3>
+          </div>
+        </article>
+        <article class="knight-card" data-id="sunghoon" style="background-image: url('images/sunghoon.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">SUNGHOON</h3>
+          </div>
+        </article>
+        <article class="knight-card" data-id="jungwon" style="background-image: url('images/jungwon.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">JUNGWON</h3>
+          </div>
+        </article>
+        <article class="knight-card" data-id="sunoo" style="background-image: url('images/sunoo.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">SUNOO</h3>
+          </div>
+        </article>
+        <article class="knight-card" data-id="ni-ki" style="background-image: url('images/niki.jpeg');">
+          <div class="card-overlay">
+            <h3 class="card-name">NI-KI</h3>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="knight-modal" class="knight-modal">
+    <button class="close-modal-btn" type="button" aria-label="Close knight details">&times;</button>
+    <button class="nav-arrow prev-arrow" type="button" aria-label="Previous knight">&#10094;</button>
+    <button class="nav-arrow next-arrow" type="button" aria-label="Next knight">&#10095;</button>
+
+    <div class="modal-content">
+      <div class="modal-left">
+        <img src="" id="modal-image" alt="Knight full body">
+      </div>
+
+      <div class="modal-right">
+        <div class="modal-info-header">
+          <h2 id="modal-name">JAY <span id="modal-type" class="type-text">/ Guardian</span></h2>
+          <p id="modal-title" class="title-text">Guardian sworn to protect his brothers</p>
+        </div>
+
+        <div class="modal-story">
+          <p id="modal-desc">The knight story will appear here.</p>
+        </div>
+
+        <div class="modal-stats">
+          <div class="stat-row">
+            <span class="stat-label">Defense</span>
+            <div class="stat-blocks" id="stat-def"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Insight</span>
+            <div class="stat-blocks" id="stat-ins"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Survival</span>
+            <div class="stat-blocks" id="stat-sur"></div>
+          </div>
+        </div>
+
+        <div class="modal-skill">
+          <h4>[ ULTIMATE ] <span id="modal-skill-name">Blood Oath</span></h4>
+          <p id="modal-skill-desc">Skill details will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
