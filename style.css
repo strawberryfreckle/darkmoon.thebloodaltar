@@ -365,3 +365,15 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
   /* 기존에 깔려있던 전체 까만 장막은 제거 (그라데이션 빛을 살리기 위함) */
   display: none; 
 }
+/* === Scene 4에서 Scene 5(엔딩)로 넘어가는 심연 그라데이션 브릿지 === */
+.story-scene.scene-4::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh; /* 화면 아래쪽 40% 영역을 덮음 */
+  background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+  z-index: 1;
+  pointer-events: none;
+}
