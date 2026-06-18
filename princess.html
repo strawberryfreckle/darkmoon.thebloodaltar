@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARK MOON | Princess Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blood-red: #e6192b;
+      --bg-dark: #050102;
+      --panel: rgba(10, 3, 6, 0.86);
+      --line: rgba(230, 25, 43, 0.28);
+      --text: #f6eef1;
+      --muted: #bba9af;
+      --gold: #d8b56d;
+      --ok: #67d995;
+      --error: #ff7782;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Noto Serif KR", serif;
+      background:
+        linear-gradient(90deg, rgba(5, 1, 2, 0.94), rgba(5, 1, 2, 0.72) 44%, rgba(5, 1, 2, 0.98)),
+        url("images/princess.jpg") center / cover fixed no-repeat;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px clamp(18px, 5vw, 54px);
+      background: rgba(5, 1, 2, 0.68);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font: 800 1.1rem "Cinzel", serif;
+      letter-spacing: 2px;
+    }
+
+    .brand-mark {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--blood-red);
+      box-shadow: 0 0 14px var(--blood-red);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: clamp(14px, 3vw, 30px);
+    }
+
+    .site-nav a {
+      color: #cfc2c6;
+      text-decoration: none;
+      font: 700 0.9rem "Cinzel", serif;
+      letter-spacing: 1.6px;
+    }
+
+    .site-nav a:hover { color: #fff; }
+
+    .content {
+      width: min(1160px, calc(100% - 36px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 1.05fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+      padding: 54px 0;
+    }
+
+    .intro {
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font: 800 0.88rem "Cinzel", serif;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(216, 181, 109, 0.25);
+    }
+
+    h1 {
+      margin: 0 0 22px;
+      font: 800 clamp(3rem, 7vw, 6.4rem) / 0.92 "Cinzel", serif;
+      text-shadow: 0 0 32px rgba(230, 25, 43, 0.52), 2px 2px 0 #000;
+    }
+
+    .intro p {
+      max-width: 520px;
+      margin: 0;
+      color: #d8cdd1;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    .account-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5);
+      padding: clamp(22px, 4vw, 38px);
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .panel-title {
+      margin: 0 0 10px;
+      font: 800 1.7rem "Cinzel", serif;
+      letter-spacing: 2px;
+    }
+
+    .panel-copy {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .privacy-box {
+      max-height: 280px;
+      overflow: auto;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.28);
+      color: #d8cdd1;
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+
+    .privacy-box strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .privacy-box ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .confirm-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 18px 0 0;
+      color: #e9dde1;
+      line-height: 1.5;
+    }
+
+    .confirm-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--blood-red);
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      color: #e1d4d8;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      height: 46px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(0, 0, 0, 0.34);
+      color: #fff;
+      padding: 0 13px;
+      outline: none;
+      font: 600 1rem "Noto Serif KR", serif;
+    }
+
+    input:focus {
+      border-color: rgba(230, 25, 43, 0.78);
+      box-shadow: 0 0 0 3px rgba(230, 25, 43, 0.14);
+    }
+
+    .inline-field,
+    .password-field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .inline-field { grid-template-columns: 1fr 112px; }
+    .password-field { grid-template-columns: 1fr 70px; }
+
+    button {
+      min-height: 46px;
+      border: 1px solid rgba(230, 25, 43, 0.52);
+      color: #fff;
+      background: rgba(230, 25, 43, 0.18);
+      font: 800 0.9rem "Noto Serif KR", serif;
+      cursor: pointer;
+    }
+
+    button:hover { background: rgba(230, 25, 43, 0.32); }
+
+    .primary-button {
+      width: 100%;
+      margin-top: 18px;
+      background: var(--blood-red);
+      border-color: var(--blood-red);
+      letter-spacing: 1px;
+      box-shadow: 0 0 28px rgba(230, 25, 43, 0.25);
+    }
+
+    .ghost-button {
+      width: 100%;
+      margin-top: 10px;
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d2c4c8;
+    }
+
+    .hint {
+      min-height: 20px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .hint.ok { color: var(--ok); }
+    .hint.error { color: var(--error); }
+    .hint.warn { color: #f0bd64; }
+
+    .status {
+      display: none;
+      margin: 18px 0 0;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .status.show { display: block; }
+    .status.ok { color: var(--ok); border-color: rgba(103, 217, 149, 0.45); }
+    .status.error { color: var(--error); border-color: rgba(255, 119, 130, 0.45); }
+    .status.warn { color: #f0bd64; border-color: rgba(240, 189, 100, 0.45); }
+
+    @media (max-width: 820px) {
+      .site-header {
+        align-items: flex-start;
+        gap: 16px;
+        flex-direction: column;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+        padding: 34px 0;
+      }
+
+      .intro {
+        min-height: 330px;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .site-nav {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .site-nav a {
+        font-size: 0.78rem;
+        letter-spacing: 1px;
+      }
+
+      .inline-field,
+      .password-field {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"></span>
+        DARK MOON
+      </a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="story.html">Story</a>
+        <a href="knights.html">Knights</a>
+        <a href="index.html#world">World</a>
+        <a href="event.html">Events</a>
+      </nav>
+    </header>
+
+    <main class="content">
+      <section class="intro" aria-label="Princess">
+        <p class="eyebrow">Princess Registry</p>
+        <h1>Princess<br>Account</h1>
+        <p>붉은 달 아래 숨겨진 초대장. 개인정보 확인을 마치면 DARK MOON 계정 등록이 열립니다.</p>
+      </section>
+
+      <section class="account-card" aria-label="회원가입">
+        <div class="panel active" id="privacy-panel">
+          <h2 class="panel-title">Privacy Check</h2>
+          <p class="panel-copy">회원가입 전에 개인정보 수집 및 이용 내용을 확인해주세요.</p>
+
+          <div class="privacy-box" tabindex="0">
+            <strong>개인정보 수집 및 이용 안내</strong>
+            DARK MOON 팬 페이지 계정 생성을 위해 아래 정보를 수집합니다.
+            <ul>
+              <li>수집 항목: 아이디, 이메일, 전화번호</li>
+              <li>이용 목적: 회원 식별, 로그인, 가입 상태 확인</li>
+              <li>보관 위치: Supabase Auth 및 profiles 테이블</li>
+              <li>비밀번호는 Supabase Auth로 처리되며 profiles 테이블에 저장하지 않습니다.</li>
+            </ul>
+          </div>
+
+          <label class="confirm-row">
+            <input id="privacy-agree" type="checkbox">
+            <span>개인정보 수집 및 이용 내용을 확인했고 동의합니다.</span>
+          </label>
+
+          <button class="primary-button" id="show-signup-button" type="button">개인정보 확인</button>
+          <p class="status" id="privacy-status"></p>
+        </div>
+
+        <form class="panel" id="signup-panel" novalidate>
+          <h2 class="panel-title">Join The Altar</h2>
+          <p class="panel-copy">모든 항목을 입력한 뒤 아이디 중복 확인을 완료해주세요.</p>
+
+          <div class="field">
+            <label for="signup-username">아이디</label>
+            <div class="inline-field">
+              <input id="signup-username" autocomplete="username" minlength="4" maxlength="20" pattern="^[A-Za-z0-9_]{4,20}$" required>
+              <button id="check-username" type="button">중복확인</button>
+            </div>
+            <p class="hint" id="username-hint">영문, 숫자, 밑줄 포함 4~20자</p>
+          </div>
+
+          <div class="field">
+            <label for="signup-email">이메일</label>
+            <input id="signup-email" type="email" autocomplete="email" required>
+            <p class="hint" id="email-hint">로그인에 사용할 이메일을 입력하세요.</p>
+          </div>
+
+          <div class="field">
+            <label for="signup-phone">전화번호</label>
+            <input id="signup-phone" type="tel" inputmode="numeric" maxlength="11" pattern="^[0-9]{10,11}$" required>
+            <p class="hint" id="phone-hint">숫자만 입력, 10~11자리</p>
+          </div>
+
+          <div class="field">
+            <label for="signup-password">비밀번호</label>
+            <div class="password-field">
+              <input id="signup-password" type="password" autocomplete="new-password" minlength="8" maxlength="16" required>
+              <button type="button" data-toggle-password="signup-password">보기</button>
+            </div>
+            <p class="hint" id="password-hint">8~16자, 대문자, 소문자, 숫자, 특수문자 필수</p>
+          </div>
+
+          <div class="field">
+            <label for="signup-password-confirm">비밀번호 확인</label>
+            <div class="password-field">
+              <input id="signup-password-confirm" type="password" autocomplete="new-password" required>
+              <button type="button" data-toggle-password="signup-password-confirm">보기</button>
+            </div>
+            <p class="hint" id="confirm-hint">비밀번호를 한 번 더 입력하세요.</p>
+          </div>
+
+          <button class="primary-button" type="submit">회원가입</button>
+          <button class="ghost-button" id="back-to-privacy" type="button">개인정보 다시 보기</button>
+          <p class="status" id="signup-status"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const SUPABASE_URL = "https://xdlxxruacltunepdeewr.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_go4E-cHPC0bb-EfYQyTL0Q_44HdXRH9";
+
+    const supabaseReady = !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
+    const supabase = supabaseReady ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    const privacyPanel = document.getElementById("privacy-panel");
+    const signupPanel = document.getElementById("signup-panel");
+    const privacyAgree = document.getElementById("privacy-agree");
+    const privacyStatus = document.getElementById("privacy-status");
+    const signupStatus = document.getElementById("signup-status");
+    const usernameInput = document.getElementById("signup-username");
+    const emailInput = document.getElementById("signup-email");
+    const phoneInput = document.getElementById("signup-phone");
+    const passwordInput = document.getElementById("signup-password");
+    const confirmInput = document.getElementById("signup-password-confirm");
+    const usernameHint = document.getElementById("username-hint");
+    const emailHint = document.getElementById("email-hint");
+    const phoneHint = document.getElementById("phone-hint");
+    const passwordHint = document.getElementById("password-hint");
+    const confirmHint = document.getElementById("confirm-hint");
+
+    const usernamePattern = /^[A-Za-z0-9_]{4,20}$/;
+    const phonePattern = /^[0-9]{10,11}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/;
+
+    let usernameChecked = false;
+    let checkedUsername = "";
+
+    function setStatus(node, message, type = "warn") {
+      node.textContent = message;
+      node.className = `status show ${type}`;
+    }
+
+    function clearStatus(node) {
+      node.textContent = "";
+      node.className = "status";
+    }
+
+    function setHint(node, message, type = "") {
+      node.textContent = message;
+      node.className = `hint ${type}`.trim();
+    }
+
+    function showPanel(panel) {
+      privacyPanel.classList.toggle("active", panel === "privacy");
+      signupPanel.classList.toggle("active", panel === "signup");
+    }
+
+    function ensureSupabase() {
+      if (supabaseReady) return true;
+      setStatus(signupStatus, "princess.html의 SUPABASE_URL과 SUPABASE_ANON_KEY를 실제 값으로 바꿔주세요.", "warn");
+      return false;
+    }
+
+    document.getElementById("show-signup-button").addEventListener("click", () => {
+      clearStatus(privacyStatus);
+
+      if (!privacyAgree.checked) {
+        setStatus(privacyStatus, "개인정보 수집 및 이용 동의에 체크해주세요.", "error");
+        return;
+      }
+
+      showPanel("signup");
+      usernameInput.focus();
+    });
+
+    document.getElementById("back-to-privacy").addEventListener("click", () => {
+      showPanel("privacy");
+    });
+
+    document.querySelectorAll("[data-toggle-password]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.togglePassword);
+        input.type = input.type === "password" ? "text" : "password";
+        button.textContent = input.type === "password" ? "보기" : "숨김";
+      });
+    });
+
+    usernameInput.addEventListener("input", () => {
+      usernameInput.value = usernameInput.value.replace(/[^\w]/g, "");
+      usernameChecked = false;
+      checkedUsername = "";
+      const valid = usernamePattern.test(usernameInput.value);
+      setHint(usernameHint, valid ? "중복 확인을 진행하세요." : "영문, 숫자, 밑줄 포함 4~20자", valid ? "warn" : "");
+    });
+
+    emailInput.addEventListener("input", () => {
+      setHint(emailHint, emailInput.validity.valid ? "사용 가능한 이메일 형식입니다." : "올바른 이메일 형식으로 입력하세요.", emailInput.validity.valid ? "ok" : "error");
+    });
+
+    phoneInput.addEventListener("input", () => {
+      phoneInput.value = phoneInput.value.replace(/\D/g, "").slice(0, 11);
+      const valid = phonePattern.test(phoneInput.value);
+      setHint(phoneHint, valid ? "사용 가능한 전화번호 형식입니다." : "숫자만 입력, 10~11자리", valid ? "ok" : "");
+    });
+
+    passwordInput.addEventListener("input", validatePasswordPair);
+    confirmInput.addEventListener("input", validatePasswordPair);
+
+    function validatePasswordPair() {
+      const passwordValid = passwordPattern.test(passwordInput.value);
+      setHint(passwordHint, passwordValid ? "안전한 비밀번호 형식입니다." : "8~16자, 대문자, 소문자, 숫자, 특수문자 필수", passwordValid ? "ok" : "error");
+
+      if (!confirmInput.value) {
+        setHint(confirmHint, "비밀번호를 한 번 더 입력하세요.");
+        return false;
+      }
+
+      const same = passwordInput.value === confirmInput.value;
+      setHint(confirmHint, same ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.", same ? "ok" : "error");
+      return passwordValid && same;
+    }
+
+    document.getElementById("check-username").addEventListener("click", async () => {
+      clearStatus(signupStatus);
+      if (!ensureSupabase()) return;
+
+      const username = usernameInput.value.trim();
+      if (!usernamePattern.test(username)) {
+        setHint(usernameHint, "아이디는 영문, 숫자, 밑줄 포함 4~20자여야 합니다.", "error");
+        return;
+      }
+
+      const { data, error } = await supabase.rpc("username_exists", {
+        check_username: username
+      });
+
+      if (error) {
+        setHint(usernameHint, `중복 확인 실패: ${error.message}`, "error");
+        return;
+      }
+
+      if (data === true) {
+        usernameChecked = false;
+        checkedUsername = "";
+        setHint(usernameHint, "이미 사용 중인 아이디입니다.", "error");
+        return;
+      }
+
+      usernameChecked = true;
+      checkedUsername = username;
+      setHint(usernameHint, "사용 가능한 아이디입니다.", "ok");
+    });
+
+    signupPanel.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus(signupStatus);
+
+      if (!ensureSupabase()) return;
+
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!usernamePattern.test(username)) {
+        setStatus(signupStatus, "아이디 형식을 확인하세요.", "error");
+        return;
+      }
+
+      if (!usernameChecked || checkedUsername !== username) {
+        setStatus(signupStatus, "아이디 중복 확인을 먼저 완료하세요.", "error");
+        return;
+      }
+
+      if (!emailInput.validity.valid) {
+        setStatus(signupStatus, "이메일 형식을 확인하세요.", "error");
+        return;
+      }
+
+      if (!phonePattern.test(phone)) {
+        setStatus(signupStatus, "전화번호는 숫자만 10~11자리로 입력하세요.", "error");
+        return;
+      }
+
+      if (!validatePasswordPair()) {
+        setStatus(signupStatus, "비밀번호 조건과 확인 값을 다시 살펴보세요.", "error");
+        return;
+      }
+
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+            phone
+          }
+        }
+      });
+
+      if (error) {
+        setStatus(signupStatus, `회원가입 실패: ${error.message}`, "error");
+        return;
+      }
+
+      sessionStorage.setItem("princessUsername", username);
+      window.location.href = `princess-welcome.html?username=${encodeURIComponent(username)}`;
+    });
+  </script>
+</body>
+</html>
