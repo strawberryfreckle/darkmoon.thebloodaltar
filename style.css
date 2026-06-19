@@ -751,73 +751,69 @@ h1, h2, h3, .eyebrow, .brand { font-family: 'Cinzel', serif; }
 
 @keyframes radar { 100% { transform: rotate(360deg); } }
 
-/* 지도 위 노드(위치 표시) */
-.map-node {
-  position: absolute; z-index: 2; padding: 8px 12px;
-  border: 1px solid rgba(255,255,255,0.2); background: rgba(5, 1, 2, 0.8);
-  color: #fff; font-size: 0.75rem; font-family: 'Cinzel', serif; letter-spacing: 0.1em;
-  backdrop-filter: blur(5px);
+/* =========================================
+   지도 위 노드(위치 표시) 좌표 설정
+========================================= */
+.riverfield { top: 15%; left: 45%; }
+.printanier { top: 30%; left: 48%; }
+.autumbal { top: 55%; left: 60%; }
+.hivernal { top: 65%; left: 55%; border-color: var(--blood-red); }
+.hivernal::before { box-shadow: 0 0 15px var(--blood-red), 0 0 30px var(--blood-red); transform: scale(1.2); }
+
+/* 지도 위 활성화된 노드 표시 스타일 */
+.map-node.active {
+  border-color: var(--blood-red) !important;
+  box-shadow: 0 0 20px rgba(230, 25, 43, 0.6) !important;
+  background: var(--bg-dark) !important;
+}
+
+/* =========================================
+   동적 월드맵 세부 정보 패널 스타일
+========================================= */
+.location-detail-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(145deg, rgba(15, 3, 5, 0.95) 0%, rgba(5, 1, 2, 0.98) 100%);
+  padding: clamp(25px, 4vw, 35px);
   border-radius: 4px;
-  transition: all 0.3s ease;
-  cursor: url('images/cursor_hover.png') 16 0, pointer !important;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+  min-height: 550px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.map-node:hover {
-  border-color: var(--blood-red);
-  box-shadow: 0 0 15px rgba(230, 25, 43, 0.5);
-  transform: translateY(-2px);
+.detail-header { margin-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 15px; }
+
+.detail-tag {
+  display: inline-block; font-size: 0.7rem; font-weight: 800; font-family: 'Cinzel', serif;
+  padding: 4px 10px; border-radius: 2px; margin-bottom: 10px; letter-spacing: 1.5px; text-transform: uppercase;
 }
+.detail-tag.safe { background: rgba(42, 82, 190, 0.15); color: #5a82e6; border: 1px solid #2a52be; }
+.detail-tag.neutral { background: rgba(163, 138, 142, 0.15); color: #c4b5b7; border: 1px solid #a38a8e; }
+.detail-tag.danger { background: rgba(230, 25, 43, 0.15); color: #ff4d5a; border: 1px solid var(--blood-red); }
+.detail-tag.secret { background: rgba(139, 0, 139, 0.15); color: #d66ee6; border: 1px solid #8b008b; }
 
-.map-node::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px;
-  border-radius: 50%; background: var(--blood-red); box-shadow: 0 0 10px var(--blood-red);
+.detail-header h2 {
+  font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 3vw, 2.3rem); color: #fff;
+  margin: 0 0 6px 0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
+.detail-subtitle { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; color: var(--blood-red); font-weight: 700; margin: 0; }
+.detail-desc { font-family: 'Noto Serif KR', serif; color: #ccc; font-size: 0.95rem; line-height: 1.8; margin-bottom: 30px; }
 
-/* 위치 조정 (첨부하신 map.jpg 구조에 맞춰 약간씩 %를 조절해보세요) */
-.city { top: 40%; left: 35%; }
-.alley { top: 60%; left: 45%; }
-.hideout { right: 30%; bottom: 25%; }
-.dardan { right: 20%; top: 20%; border-color: var(--blood-red); }
+/* 퀘스트 구역 스타일 */
+.detail-quests { margin-bottom: 30px; }
+.detail-quests h3 { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: #fff; margin-bottom: 12px; border-left: 2px solid var(--blood-red); padding-left: 10px; }
+.detail-quests ul { list-style: none; padding: 0; margin: 0; }
+.detail-quests li { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; color: #aaa; padding: 8px 12px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 6px; border-radius: 4px; }
 
-/* 리스트 설명 박스 */
-.location-list {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(15px, 2vw, 20px);
-}
+/* 이미지 3~4장 2x2 레이아웃 구역 */
+.detail-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 25px; }
+.gallery-thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; background: #000; }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s; filter: brightness(0.8); }
+.gallery-thumb:hover img { transform: scale(1.05); filter: brightness(1.0); }
 
-.location-list article {
-  border: 1px solid rgba(230, 25, 43, 0.15); 
-  background: rgba(5, 1, 2, 0.6); 
-  padding: clamp(20px, 3vw, 30px); 
-  border-radius: 4px;
-  backdrop-filter: blur(10px);
-  transition: border-color 0.4s ease, transform 0.4s ease;
-}
-
-.location-list article:hover {
-  transform: translateY(-5px);
-  border-color: var(--blood-red);
-  box-shadow: 0 10px 30px rgba(230, 25, 43, 0.15);
-  background: rgba(20, 5, 8, 0.8);
-}
-
-.location-list h3 { 
-  font-family: 'Cinzel', serif; 
-  color: var(--blood-red); 
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.location-list p { 
-  font-family: 'Noto Serif KR', serif; 
-  color: #bbb; 
-  font-size: clamp(0.9rem, 1.5vw, 1rem); 
-  line-height: 1.7;
-}
-
-/* 태블릿, 모바일 반응형 처리 */
+/* 모바일 반응형 */
 @media (max-width: 900px) {
   .map-layout { grid-template-columns: 1fr; }
   .map-visual { min-height: 400px; }

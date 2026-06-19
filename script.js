@@ -197,3 +197,115 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
 const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+// === World Map 상호작용 데이터 및 로직 ===
+const worldZoneData = {
+  riverfield: {
+    title: "Riverfield", subtitle: "여정의 시작과 끝, 기사들의 은신처",
+    tag: "Safe Zone", tagClass: "safe",
+    desc: "평화로운 강변의 도시. 낮에는 평범한 학생들의 일상이 흐르지만, 밤이 되면 뱀파이어들의 은밀한 움직임이 시작됩니다. 드셀리스 아카데미가 위치해 있으며, 평화로운 모습 이면에 깊은 비밀을 숨기고 있습니다.",
+    quests: [
+      "메인 퀘스트: 아카데미의 숨겨진 결계 작동시키기",
+      "서브 퀘스트: 밤길을 배회하는 수상한 그림자 정체 추적"
+    ],
+    images: [
+      "images/riverfield_1.jpg", "images/riverfield_2.jpg", 
+      "images/riverfield_3.jpg", "images/riverfield_4.jpg"
+    ]
+  },
+  printanier: {
+    title: "Printanier", subtitle: "정보가 오가는 안개의 거리",
+    tag: "Neutral Zone", tagClass: "neutral",
+    desc: "레일건 뱀파이어들의 아지트이자 오래된 주점이 자리한 길목입니다. 안개 덕분에 적들의 감시를 피하기 용이하며, 적의 심장부로 향하기 전 귀중한 정보를 수집하고 전열을 가다듬을 수 있는 쉼터입니다.",
+    quests: [
+      "메인 퀘스트: 주점 마스터에게 비밀 밀서 전달하기",
+      "서브 퀘스트: 안개 속에서 유출된 정보 조각 회수"
+    ],
+    images: [
+      "images/printanier_1.jpg", "images/printanier_2.jpg", 
+      "images/printanier_3.jpg", "images/printanier_4.jpg"
+    ]
+  },
+  autumbal: {
+    title: "Autumbal", subtitle: "핏빛 달이 뜨는 적대 구역",
+    tag: "Danger Zone", tagClass: "danger",
+    desc: "적대적인 뱀파이어 세력이 지배하고 있는 회색빛 도시입니다. 높은 감시탑과 삼엄한 경비망이 사방을 조여오며, 팽팽한 긴장감 속에서 목숨을 건 치열한 생존 전투가 벌어집니다.",
+    quests: [
+      "메인 퀘스트: 외곽 감시탑의 동력 장치 무력화",
+      "서브 퀘스트: 사냥당한 동료들의 흔적 추적 및 구출"
+    ],
+    images: [
+      "images/autumbal_1.jpg", "images/autumbal_2.jpg", 
+      "images/autumbal_3.jpg", "images/autumbal_4.jpg"
+    ]
+  },
+  hivernal: {
+    title: "Hivernal", subtitle: "가장 깊은 심연, 진실의 제단",
+    tag: "Sanctuary", tagClass: "secret",
+    desc: "오토널 시 최심부에 봉인된 성역입니다. 주인공들의 잃어버린 전생의 기억이 잠들어 있는 장소이자 모든 비극의 시작점인 '달의 제단'이 존재하는 곳으로, 진실을 마주하는 클라이맥스의 무대입니다.",
+    quests: [
+      "메인 퀘스트: 달의 제단에 봉인된 힘의 각성",
+      "최종 임무: 제단의 파괴와 전생의 매듭짓기"
+    ],
+    images: [
+      "images/hivernal_1.jpg", "images/hivernal_2.jpg", 
+      "images/hivernal_3.jpg", "images/hivernal_4.jpg"
+    ]
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const mapNodes = document.querySelectorAll(".map-node");
+  const detailPanel = document.getElementById("location-detail-panel");
+
+  if (!detailPanel || mapNodes.length === 0) return;
+
+  function updateDetailPanel(locKey) {
+    const data = worldZoneData[locKey];
+    if (!data) return;
+
+    const questHTML = data.quests.map(q => `<li>${q}</li>`).join("");
+    const imageHTML = data.images.map(imgSrc => `
+      <div class="gallery-thumb">
+        <img src="${imgSrc}" alt="${data.title} 전경" onerror="this.src='images/placeholder.jpg'">
+      </div>
+    `).join("");
+
+    detailPanel.style.opacity = 0;
+    detailPanel.style.transform = "translateY(10px)";
+
+    setTimeout(() => {
+      detailPanel.innerHTML = `
+        <div class="detail-header">
+          <span class="detail-tag ${data.tagClass}">${data.tag}</span>
+          <h2>${data.title}</h2>
+          <p class="detail-subtitle">${data.subtitle}</p>
+        </div>
+        <div class="detail-body">
+          <p class="detail-desc">${data.desc}</p>
+          <div class="detail-quests">
+            <h3>지역 임무</h3>
+            <ul>${questHTML}</ul>
+          </div>
+          <div class="detail-gallery">
+            ${imageHTML}
+          </div>
+        </div>
+      `;
+      detailPanel.style.opacity = 1;
+      detailPanel.style.transform = "translateY(0)";
+    }, 200);
+  }
+
+  mapNodes.forEach(node => {
+    const triggerEvent = () => {
+      const locKey = node.getAttribute("data-loc");
+      mapNodes.forEach(n => n.classList.remove("active"));
+      node.classList.add("active");
+      updateDetailPanel(locKey);
+    };
+    node.addEventListener("click", triggerEvent);
+    node.addEventListener("mouseenter", triggerEvent);
+  });
+
+  updateDetailPanel("riverfield");
+});
