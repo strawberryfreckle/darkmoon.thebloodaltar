@@ -5,6 +5,17 @@
   --text-light: #f0e6e8;
 }
 
+/* 1. 전체 화면 기본 커서 변경 */
+/* 1. 전체 화면 기본 커서 변경 */
+html, body {
+  cursor: url('images/cursor.png') 16 0, auto !important; 
+}
+
+/* 2. 호버 시 마우스 커서 변경 (클릭 가능한 모든 요소) */
+a, button, .knight-card, .close-modal-btn, .platform-icons img, .feature-card {
+  cursor: url('images/cursor_hover.png') 16 0, pointer !important;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--bg-dark); color: var(--text-light); }
 body { font-family: 'Noto Serif KR', serif; overflow-x: hidden; }
