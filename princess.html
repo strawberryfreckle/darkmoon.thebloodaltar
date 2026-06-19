@@ -413,9 +413,23 @@
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-    const SUPABASE_URL = "https://xdlxxruacltunepdeewr.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_go4E-cHPC0bb-EfYQyTL0Q_44HdXRH9";
+    const DEFAULT_SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+    const DEFAULT_SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
+    async function loadSupabaseConfig() {
+      let url = DEFAULT_SUPABASE_URL;
+      let key = DEFAULT_SUPABASE_ANON_KEY;
+      try {
+        const config = await import('./config.js');
+        if (config.SUPABASE_URL) url = config.SUPABASE_URL;
+        if (config.SUPABASE_ANON_KEY) key = config.SUPABASE_ANON_KEY;
+      } catch (error) {
+        console.warn('config.js not found; using placeholder Supabase values.');
+      }
+      return { url, key };
+    }
+
+    const { url: SUPABASE_URL, key: SUPABASE_ANON_KEY } = await loadSupabaseConfig();
     const supabaseReady = !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
     const supabase = supabaseReady ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
